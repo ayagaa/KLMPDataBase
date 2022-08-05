@@ -17,7 +17,7 @@ namespace KLMP.DataAccess.Repository.Utils
                 originalGUID = Guid.NewGuid().ToString();
                 uniqueIds.Add(originalGUID.Substring(originalGUID.Length - 5, 4));
             }
-
+            Console.WriteLine(uniqueIds.Count);
             return uniqueIds;
         }
     }

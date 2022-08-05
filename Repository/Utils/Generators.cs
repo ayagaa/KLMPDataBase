@@ -35,21 +35,36 @@ namespace KLMP.DataAccess.Repository.Utils
             this.filePath = filePath;
             facilitiesData = new FacilitiesDataModel(filePath);
             wardsCounties = facilitiesData.WardsCounties;
-            agroVets = facilitiesData.AgroVets;
-            bandas = facilitiesData.Bandas;
-            beeKeepingWs = facilitiesData.BeeKeepingWs;
-            beeProductProcessings = facilitiesData.BeeProductProcessing;
-            ectoparasiteControls = facilitiesData.EctoparasiteControl;
-            hatcheryInstitutions = facilitiesData.HatcheryInstitutions;
-            livestockFeedProcessings = facilitiesData.LivestockFeedProcessing;
-            livestockMarkets = facilitiesData.LivestockMarkets;
-            livestockSocieties = facilitiesData.LivestockSocieties;
-            livestockMilkCoolings = facilitiesData.LivestockMilkCooling;
-            livestockSlaughters = facilitiesData.LivestockSlaughter;
-            meatProcessings = facilitiesData.MeatProcessings;
-            milkATMs = facilitiesData.MilkATMs;
-            vaccinationSites = facilitiesData.VaccinationSites;
-            waterPoints = facilitiesData.WaterPoints;
+            agroVets = facilitiesData.AgroVets.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            bandas = facilitiesData.Bandas.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            beeKeepingWs = facilitiesData.BeeKeepingWs.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            beeProductProcessings = facilitiesData.BeeProductProcessing.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            ectoparasiteControls = facilitiesData.EctoparasiteControl.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            hatcheryInstitutions = facilitiesData.HatcheryInstitutions.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            livestockFeedProcessings = facilitiesData.LivestockFeedProcessing.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            livestockMarkets = facilitiesData.LivestockMarkets.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            livestockSocieties = facilitiesData.LivestockSocieties.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            livestockMilkCoolings = facilitiesData.LivestockMilkCooling.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            livestockSlaughters = facilitiesData.LivestockSlaughter.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            meatProcessings = facilitiesData.MeatProcessings.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            milkATMs = facilitiesData.MilkATMs.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            vaccinationSites = facilitiesData.VaccinationSites.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
+            waterPoints = facilitiesData.WaterPoints.
+                Where(f => !string.IsNullOrEmpty(f.facility_id) && !string.IsNullOrEmpty(f.ward_name)).ToList();
         }
 
         private void WriteToConsole(string facilityType, int recordCount)
@@ -119,6 +134,36 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 WriteToConsole("Water Point Facilities", facilitiesData.WaterPoints.Count);
             }
+        }
+
+        public bool WriteToFiles(string outputfilePath)
+        {
+            try
+            {
+                Console.WriteLine(string.Format("Writing data to folder: {0}", outputfilePath));
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "agro_vet_facility.csv"), agroVets);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Bandas.csv"), bandas);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Bee_Keeping_WS.csv"), beeKeepingWs);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Bee_Product_Processing.csv"), beeProductProcessings);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Ectoparasite_Control.csv"), ectoparasiteControls);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Hatchery_Institution.csv"), hatcheryInstitutions);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Livestock_Feed_Processing.csv"), livestockFeedProcessings);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Livestock_Market.csv"), livestockMarkets);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Livestock_Milk_Cooling.csv"), livestockMilkCoolings);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Livestock_Slaughter.csv"), livestockSlaughters);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Livestock_Societies.csv"), livestockSocieties);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Meat_Processing_Facility.csv"), meatProcessings);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "milk_atms.csv"), milkATMs);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Vaccination_Site.csv"), vaccinationSites);
+                ReadWriteCSVFile.WriteRootObjectFile(Path.Combine(outputfilePath, "Water_Point.csv"), waterPoints);
+                Console.WriteLine(string.Format("Completed to write data to folder: {0}", outputfilePath));
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+
+            return false;
         }
 
         public List<TblFacilityActivityPeriod> GetTblFacilityActivityPeriods()
@@ -491,7 +536,8 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = agroVet.contact_person,
                         CountyId = agroVet.county_id,
                         WardId = wardId,
-                        PhoneNumber = agroVet?.phone_number.ToString()
+                        PhoneNumber = agroVet?.phone_number.ToString(),
+                        ContactType = agroVet?.facility_type
                     });
                 }
             }
@@ -507,7 +553,8 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = beeWS.contact_person,
                         CountyId = beeWS.county_id,
                         WardId = wardId,
-                        PhoneNumber = beeWS?.phone_number.ToString()
+                        PhoneNumber = beeWS?.phone_number.ToString(),
+                        ContactType = beeWS?.facility_type
                     });
                 }
             }
@@ -523,7 +570,8 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = beeProducts.contact_person,
                         CountyId = beeProducts.county_id,
                         WardId = wardId,
-                        PhoneNumber = beeProducts?.phone_number.ToString()
+                        PhoneNumber = beeProducts?.phone_number.ToString(),
+                        ContactType = beeProducts?.facility_type
                     });
                 }
             }
@@ -539,7 +587,8 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = ectoParasiteControl.contact_person,
                         CountyId = ectoParasiteControl.county_id,
                         WardId = wardId,
-                        PhoneNumber = ectoParasiteControl?.phone_number.ToString()
+                        PhoneNumber = ectoParasiteControl?.phone_number.ToString(),
+                        ContactType = ectoParasiteControl?.facility_type
                     });
                 }
             }
@@ -555,7 +604,8 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = hatcheryInstitute.contact_person,
                         CountyId = hatcheryInstitute.county_id,
                         WardId = wardId,
-                        PhoneNumber = hatcheryInstitute?.phone_number.ToString()
+                        PhoneNumber = hatcheryInstitute?.phone_number.ToString(),
+                        ContactType = hatcheryInstitute?.facility_type
                     });
                 }
             }
@@ -572,8 +622,10 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = livestockFeedProcessing.contact_person,
                         CountyId = livestockFeedProcessing.county_id,
                         WardId = wardId,
-                        PhoneNumber = livestockFeedProcessing?.phone_number.ToString()
+                        PhoneNumber = livestockFeedProcessing?.phone_number.ToString(),
+                        ContactType = livestockFeedProcessing?.facility_type
                     });
+
                 }
             }
             if (livestockMarkets?.Count > 0)
@@ -588,17 +640,25 @@ namespace KLMP.DataAccess.Repository.Utils
                         ContactPerson = livestockMarket.contact_person,
                         CountyId = livestockMarket.county_id,
                         WardId = wardId,
-                        PhoneNumber = livestockMarket?.phone_number.ToString()
+                        PhoneNumber = livestockMarket?.phone_number.ToString(),
+                        ContactType = livestockMarket?.facility_type
                     });
                 }
             }
             if (livestockMilkCoolings?.Count > 0)
             {
-                foreach (var livestockCooling in livestockMilkCoolings)
+                foreach (var milkCooling in livestockMilkCoolings)
                 {
+                    int wardId = 0;
+                    int.TryParse(milkCooling.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
-                        FacilityId = livestockCooling.facility_id,
+                        FacilityId = milkCooling.facility_id,
+                        ContactPerson = milkCooling.contact_person,
+                        CountyId = milkCooling.county_id,
+                        WardId = wardId,
+                        PhoneNumber = milkCooling?.phone_number.ToString(),
+                        ContactType = milkCooling?.facility_type
                     });
                 }
             }
@@ -606,9 +666,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var livestockSlaughter in livestockSlaughters)
                 {
+                    int wardId = 0;
+                    int.TryParse(livestockSlaughter.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = livestockSlaughter.facility_id,
+                        ContactPerson = livestockSlaughter.contact_person,
+                        CountyId = livestockSlaughter.county_id,
+                        WardId = wardId,
+                        PhoneNumber = livestockSlaughter?.phone_number.ToString(),
+                        ContactType = livestockSlaughter?.facility_type
                     });
                 }
             }
@@ -616,9 +683,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var livestockSociety in livestockSocieties)
                 {
+                    int wardId = 0;
+                    int.TryParse(livestockSociety.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = livestockSociety.facility_id,
+                        ContactPerson = livestockSociety.contact_person,
+                        CountyId = livestockSociety.county_id,
+                        WardId = wardId,
+                        PhoneNumber = livestockSociety?.phone_number.ToString(),
+                        ContactType = livestockSociety?.facility_type
                     });
                 }
             }
@@ -626,9 +700,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var meatProcessing in meatProcessings)
                 {
+                    int wardId = 0;
+                    int.TryParse(meatProcessing.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = meatProcessing.facility_id,
+                        ContactPerson = meatProcessing.contact_person,
+                        CountyId = meatProcessing.county_id,
+                        WardId = wardId,
+                        PhoneNumber = meatProcessing?.phone_number.ToString(),
+                        ContactType = meatProcessing?.facility_type
                     });
                 }
             }
@@ -636,9 +717,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var milkATM in milkATMs)
                 {
+                    int wardId = 0;
+                    int.TryParse(milkATM.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = milkATM.facility_id,
+                        ContactPerson = milkATM.contact_person,
+                        CountyId = milkATM.county_id,
+                        WardId = wardId,
+                        PhoneNumber = milkATM?.phone_number.ToString(),
+                        ContactType = milkATM?.facility_type
                     });
                 }
             }
@@ -646,9 +734,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var vaccinationSite in vaccinationSites)
                 {
+                    int wardId = 0;
+                    int.TryParse(vaccinationSite.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = vaccinationSite.facility_id,
+                        ContactPerson = vaccinationSite.contact_person,
+                        CountyId = vaccinationSite.county_id,
+                        WardId = wardId,
+                        PhoneNumber = vaccinationSite?.phone_number.ToString(),
+                        ContactType = vaccinationSite?.facility_type
                     });
                 }
             }
@@ -656,9 +751,16 @@ namespace KLMP.DataAccess.Repository.Utils
             {
                 foreach (var waterPoint in waterPoints)
                 {
+                    int wardId = 0;
+                    int.TryParse(waterPoint.ward_id.ToString(), out wardId);
                     facilityContacts.Add(new TblFacilityContactPerson
                     {
                         FacilityId = waterPoint.facility_id,
+                        ContactPerson = waterPoint.contact_person,
+                        CountyId = waterPoint.county_id,
+                        WardId = wardId,
+                        PhoneNumber = waterPoint?.phone_number.ToString(),
+                        ContactType = waterPoint?.facility_type
                     });
                 }
             }
@@ -1472,7 +1574,7 @@ namespace KLMP.DataAccess.Repository.Utils
 
         public List<WardCountyModel> GetWardCounties()
         {
-
+            return facilitiesData.WardsCounties;
         }
 
         public List<TblWard> GetWards()

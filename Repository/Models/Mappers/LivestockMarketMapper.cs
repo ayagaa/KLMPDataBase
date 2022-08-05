@@ -12,16 +12,23 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
     {
         public LivestockMarketMapper()
         {
-            Map(m => m.facility_id).Name("facility_id");
-            Map(m => m.serial).Name("serial");
-            Map(m => m.ward_id).Name("ward_id");
-            Map(m => m.ward_name).Name("ward_name");
-            Map(m => m.county_id).Name("county_id");
-            Map(m => m.county_name).Name("county_name");
-            Map(m => m.facility_type).Name("facility_type");
-            Map(m => m.facility_name).Name("facility_name");
+            Map(m => m.facility_id).Name("facility_id").Index(0);
+            Map(m => m.serial).Name("serial").Index(1);
+            Map(m => m.ward_id).Name("ward_id").Index(2);
+            Map(m => m.ward_name).Name("ward_name").Index(3);
+            Map(m => m.county_id).Name("county_id").Index(4);
+            Map(m => m.county_name).Name("county_name").Index(5);
+            Map(m => m.facility_type).Name("facility_type").Index(6);
+            Map(m => m.facility_name).Name("facility_name").Index(7);
+            Map(m => m.facility_ownership).Name("facility_ownership").Index(8);
+            Map(m => m.contact_person).Name("contact_person").Index(9);
+            Map(m => m.phone_number).Name("phone_number").Index(10);
+            Map(m => m.latitude).Name("latitude").Index(11);
+            Map(m => m.longitude).Name("longitude").Index(12);
+            Map(m => m.altitude).Name("altitude").Index(13);
+            Map(m => m.precision).Name("precision").Index(14);
             Map(m => m.de_Category).Name("de_Category");
-            Map(m => m.facility_ownership).Name("facility_ownership");
+            //Map(m => m.facility_ownership).Name("facility_ownership");
             Map(m => m.vc_Cattle).Name("vc_Cattle");
             Map(m => m.vc_Sheep).Name("vc_Sheep");
             Map(m => m.vc_Goat).Name("vc_Goat");
@@ -46,8 +53,8 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
             Map(m => m.am_Friday).Name("am_Friday");
             Map(m => m.am_Saturday).Name("am_Saturday");
             Map(m => m.am_Sunday).Name("am_Sunday");
-            Map(m => m.contact_person).Name("contact_person");
-            Map(m => m.phone_number).Name("phone_number");
+            //Map(m => m.contact_person).Name("contact_person");
+            //Map(m => m.phone_number).Name("phone_number");
             Map(m => m.am_Loading_ramp).Name("am_Loading_ramp");
             Map(m => m.am_Offloading_ramp).Name("am_Offloading_ramp");
             Map(m => m.am_Quarantine_facility).Name("am_Quarantine_facility");
@@ -61,10 +68,10 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
             Map(m => m.am_None).Name("am_None");
             Map(m => m.am_Other).Name("am_Other");
             Map(m => m.am_Other_Available_Facility).Name("am_Other_Available_Facility");
-            Map(m => m.latitude).Name("latitude");
-            Map(m => m.longitude).Name("longitude");
-            Map(m => m.altitude).Name("altitude");
-            Map(m => m.precision).Name("precision");
+            //Map(m => m.latitude).Name("latitude");
+            //Map(m => m.longitude).Name("longitude");
+            //Map(m => m.altitude).Name("altitude");
+            //Map(m => m.precision).Name("precision");
             Map(m => m.parent_county).Name("parent_county");
         }
     }

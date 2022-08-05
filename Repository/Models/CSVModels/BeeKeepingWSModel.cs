@@ -22,6 +22,6 @@ namespace KLMP.DataAccess.Repository.Models.CSVModels
         public int am_Beekeeping_equipment_Hive_knife { get; set; }
         public int fm_Average_Production { get; set; }
 
-        public int fm_Capacitypotential { get; set; }
+        public string? fm_Capacitypotential { get; set; }
     }
 }

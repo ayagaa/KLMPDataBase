@@ -8,7 +8,7 @@ using System.IO;
 
 namespace KLMP.DataAccess.Repository.Utils
 {
-    public static class ReadCSVFile
+    public static class ReadWriteCSVFile
     {
         public static List<RootObject> ReadRootObjectFile<RootObject>(string path)
         {
@@ -32,6 +32,26 @@ namespace KLMP.DataAccess.Repository.Utils
             }
 
             return new List<RootObject>();
+        }
+
+        public static bool WriteRootObjectFile<RootObject>(string filePath, List<RootObject> rootObjects)
+        {
+            try
+            {
+                var cultureInfo = System.Globalization.CultureInfo.InvariantCulture;
+                CsvHelper.Configuration.CsvConfiguration config = new CsvHelper.Configuration.CsvConfiguration(cultureInfo);
+                config.MissingFieldFound = null;
+                using (TextWriter writer = File.CreateText(filePath))
+                using (var csv = new CsvWriter(writer, config))
+                {
+                    csv.WriteRecords(rootObjects);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
         }
     }
 }

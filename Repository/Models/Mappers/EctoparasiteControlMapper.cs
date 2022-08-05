@@ -12,16 +12,23 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
     {
         public EctoparasiteControlMapper()
         {
-            Map(m => m.facility_id).Name("facility_id");
-            Map(m => m.serial).Name("serial");
-            Map(m => m.ward_id).Name("ward_id");
-            Map(m => m.ward_name).Name("ward_name");
-            Map(m => m.county_id).Name("county_id");
-            Map(m => m.county_name).Name("county_name");
-            Map(m => m.facility_type).Name("facility_type");
-            Map(m => m.facility_name).Name("facility_name");
+            Map(m => m.facility_id).Name("facility_id").Index(0);
+            Map(m => m.serial).Name("serial").Index(1);
+            Map(m => m.ward_id).Name("ward_id").Index(2);
+            Map(m => m.ward_name).Name("ward_name").Index(3);
+            Map(m => m.county_id).Name("county_id").Index(4);
+            Map(m => m.county_name).Name("county_name").Index(5);
+            Map(m => m.facility_type).Name("facility_type").Index(6);
+            Map(m => m.facility_name).Name("facility_name").Index(7);
+            Map(m => m.facility_ownership).Name("facility_ownership").Index(8);
+            Map(m => m.contact_person).Name("contact_person").Index(9);
+            Map(m => m.phone_number).Name("phone_number").Index(10);
+            Map(m => m.latitude).Name("latitude").Index(11);
+            Map(m => m.longitude).Name("longitude").Index(12);
+            Map(m => m.altitude).Name("altitude").Index(13);
+            Map(m => m.precision).Name("precision").Index(14);
             Map(m => m.de_Type_of_Facility).Name("de_Type_of_Facility");
-            Map(m => m.facility_ownership).Name("facility_ownership");
+            //Map(m => m.facility_ownership).Name("facility_ownership");
             Map(m => m.Value_Chain).Name("Value_Chain");
             Map(m => m.vc_Cattle).Name("vc_Cattle");
             Map(m => m.vc_Sheep).Name("vc_Sheep");
@@ -33,12 +40,12 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
             Map(m => m.vc_Rabbits).Name("vc_Rabbits");
             Map(m => m.vc_Bees).Name("vc_Bees");
             Map(m => m.fm_Average_Number_of_Animals_attended_per_Week).Name("fm_Average_Number_of_Animals_attended_per_Week");
-            Map(m => m.contact_person).Name("contact_person");
-            Map(m => m.phone_number).Name("phone_number");
-            Map(m => m.latitude).Name("latitude");
-            Map(m => m.longitude).Name("longitude");
-            Map(m => m.altitude).Name("altitude");
-            Map(m => m.precision).Name("precision");
+            //Map(m => m.contact_person).Name("contact_person");
+            //Map(m => m.phone_number).Name("phone_number");
+            //Map(m => m.latitude).Name("latitude");
+            //Map(m => m.longitude).Name("longitude");
+            //Map(m => m.altitude).Name("altitude");
+            //Map(m => m.precision).Name("precision");
             Map(m => m.parent_county).Name("parent_county");
         }
     }

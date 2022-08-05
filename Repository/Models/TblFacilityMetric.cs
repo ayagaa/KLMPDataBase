@@ -23,7 +23,8 @@ namespace KLMP.DataAccess.Repository.Models
         [Unicode(false)]
         public string? MetricUom { get; set; }
         [Column("metric_value")]
-        public float MetricValue { get; set; }
+        [StringLength(50)]
+        public string? MetricValue { get; set; }
         [Column("year_of_measure")]
         public int YearOfMeasure { get; set; }
 
