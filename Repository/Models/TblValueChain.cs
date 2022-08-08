@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace KLMP.DataAccess.Repository.Models
 {
@@ -23,7 +21,7 @@ namespace KLMP.DataAccess.Repository.Models
         public string ValueChainType { get; set; } = null!;
         [Column("value_chain_name")]
         [MaxLength(50)]
-        public byte[] ValueChainName { get; set; } = null!;
+        public string ValueChainName { get; set; } = null!;
 
         [InverseProperty("ValueChain")]
         public virtual ICollection<TblFacilityValueChain> TblFacilityValueChains { get; set; }
