@@ -17,6 +17,8 @@ namespace KLMP.DataAccess.Repository.Utils
                 var cultureInfo = System.Globalization.CultureInfo.InvariantCulture;
                 CsvHelper.Configuration.CsvConfiguration config = new CsvHelper.Configuration.CsvConfiguration(cultureInfo);
                 config.MissingFieldFound = null;
+                config.IgnoreBlankLines = true;
+
                 using (TextReader reader = File.OpenText(path))
                 using (var csv = new CsvReader(reader, config))
                 {
@@ -28,7 +30,7 @@ namespace KLMP.DataAccess.Repository.Utils
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                //Console.WriteLine(ex.Message);
             }
 
             return new List<RootObject>();

@@ -16,6 +16,22 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GeoWAIS.DB">
+      <HintPath>..\..\..\..\..\PROJECTS\GeoWAIS.Library.Net6\GeoWAIS.Net\bin\Release\net6.0\GeoWAIS.DB.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoWAIS.Models">
+      <HintPath>..\..\..\..\..\PROJECTS\GeoWAIS.Library.Net6\GeoWAIS.Net\bin\Release\net6.0\GeoWAIS.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoWAIS.Net">
+      <HintPath>..\..\..\..\..\PROJECTS\GeoWAIS.Library.Net6\GeoWAIS.Net\bin\Release\net6.0\GeoWAIS.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoWAIS.Resources">
+      <HintPath>..\..\..\..\..\PROJECTS\GeoWAIS.Library.Net6\GeoWAIS.Net\bin\Release\net6.0\GeoWAIS.Resources.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

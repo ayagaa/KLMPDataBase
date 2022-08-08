@@ -13,8 +13,8 @@ namespace KLMP.DataAccess.Repository.Models.Mappers
         public KcsapBaselineFarmerMap()
         {
             Map(m => m.Name_of_Supervisor).Name("Name_of_Supervisor");
-            Map(m => m.County).Name("County");
-            Map(m => m.Sub_county).Name("Sub_county");
+            Map(m => m.county_name).Name("County");
+            Map(m => m.subcounty_name).Name("Sub_county");
             Map(m => m.Are_you_in_a_Project_Treatment_ward_or_Control_ward).Name("Are_you_in_a_Project_Treatment_ward_or_Control_ward");
             Map(m => m.Indicate_Project_Treatment_Ward).Name("Indicate_Project_Treatment_Ward");
             Map(m => m.Indicate_the_Control_ward_you_are_in).Name("Indicate_the_Control_ward_you_are_in");

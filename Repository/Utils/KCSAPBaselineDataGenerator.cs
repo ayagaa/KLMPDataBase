@@ -1,10 +1,6 @@
-﻿using KLMP.DataAccess.Repository.Models.CSVModels;
+﻿using GeoWAIS.Models.ProductModels;
 using GeoWAIS.Net.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using KLMP.DataAccess.Repository.Models.CSVModels;
 
 namespace KLMP.DataAccess.Repository.Utils
 {
@@ -15,8 +11,10 @@ namespace KLMP.DataAccess.Repository.Utils
 
         public KCSAPBaselineDataGenerator(string filePath)
         {
+            //Console.WriteLine("Initializing Generator");
             this.filePath = filePath;
-
+            wardsCounties = WardsCounties;
+            kcsapBaselineFarmers = KcsapBaselineFarmers;
         }
 
         private List<WardCountyModel> wardsCounties = new List<WardCountyModel>();
@@ -30,40 +28,73 @@ namespace KLMP.DataAccess.Repository.Utils
         }
 
         private List<KcsapBaselineFarmer> kcsapBaselineFarmers = new List<KcsapBaselineFarmer>();
-        public List<KcsapBaselineFarmer> KcsapBaselineFarmers
-        {
-            get
-            {
-                return kcsapBaselineFarmers?.Count > 0 ? kcsapBaselineFarmers :
+        public List<KcsapBaselineFarmer> KcsapBaselineFarmers =>
+            kcsapBaselineFarmers?.Count > 0 ? kcsapBaselineFarmers :
                 kcsapBaselineFarmers = ReadWriteCSVFile.ReadRootObjectFile<KcsapBaselineFarmer>(Path.Combine(filePath, "KCSAP_BASELINE.csv"));
-            }
-        }
 
         public void GenerateUniqueFarmerId(List<KcsapBaselineFarmer> baselineFarmers)
         {
             var uniqueIdentifiers = Identifiers.GetUniqueIds(300000).ToList();
-
+            Console.WriteLine("Count of farmers is {0}", baselineFarmers.Count);
+            var unknownRecordCount = 0;
+            var validatedRecords = new List<KcsapBaselineFarmer>();
+            var unvalidatedRecords = new List<KcsapBaselineFarmer>();
             for (int i = 0; i < baselineFarmers.Count; i++)
             {
                 try
                 {
                     //var admin = wardsCounties?.
                     //    First(w => w.county_name.Trim() == baselineFarmers[i]?.County.Trim());
-                    var admin = LocationSearch.
-                        GetLocation(baselineFarmers[i]._GPS_Readings_of_the_Farm_latitude,
-                        baselineFarmers[i]._GPS_Readings_of_the_Farm_longitude).
-                        GetAwaiter().GetResult();
-                    if (admin != null)
+                    if (baselineFarmers[i] != null)
                     {
-                        baselineFarmers[i].farmer_id = uniqueIdentifiers[i];
-                        baselineFarmers[i].county_id = admin.A;
-                        var test = LocationSearch.GetLocation(500, 800).GetAwaiter().GetResult();
+                        SearchResult admin = LocationSearch.GetLocation(baselineFarmers[i]._GPS_Readings_of_the_Farm_latitude,
+                        baselineFarmers[i]._GPS_Readings_of_the_Farm_longitude).GetAwaiter().GetResult();
+
+                        if (admin != null && admin.Region3 != "UNKNOWN")
+                        {
+                            var ward = wardsCounties.FirstOrDefault(w => w.ward_name == admin.Region3.ToUpper());
+                            if (ward != null)
+                            {
+                                baselineFarmers[i].farmer_id = uniqueIdentifiers[i];
+                                baselineFarmers[i].county_id = admin.Region1Id;
+                                baselineFarmers[i].county_name = admin.Region1.ToUpper();
+                                baselineFarmers[i].subcounty_id = admin.Region2Id;
+                                baselineFarmers[i].subcounty_name = admin.Region2.ToUpper();
+                                baselineFarmers[i].ward_id = ward?.ward_id;
+                                baselineFarmers[i].ward_name = admin.Region3.ToUpper();
+                                //Console.
+                                //    WriteLine(string.Format("Farmer Id = {0}, County Id = {1}, County = {2}, Subcounty Id = {3} Subcounty = {4}, Ward Id = {5}, Ward = {6}",
+                                //    uniqueIdentifiers[i], admin?.Region1Id, admin?.Region1.ToUpper(),
+                                //    admin?.Region2Id, admin?.Region2.ToUpper(),
+                                //     ward?.ward_id, admin?.Region3.ToUpper()));
+                            }
+                            else
+                            {
+                                if (admin.Region3 != "UNKNOWN")
+                                    unknownRecordCount++;
+                                Console.WriteLine(
+                                    "Farmer Id = {0}, County Id = {1}, County = {2}, Subcounty Id = {3} Subcounty = {4}, Ward Id = {5}, Ward = {6}",
+                                    uniqueIdentifiers[i], admin?.Region1Id, admin?.Region1.ToUpper(), admin?.Region2Id,
+                                    admin?.Region2.ToUpper(), admin?.Region3Id, admin?.Region3.ToUpper());
+                            }
+                        }
+                        else
+                        {
+
+                            Console.
+                                WriteLine(String.
+                                Format("Admin not found for latitude: {0}, longitude: {1}",
+                                baselineFarmers[i]._GPS_Readings_of_the_Farm_latitude,
+                                baselineFarmers[i]._GPS_Readings_of_the_Farm_longitude));
+                        }
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine("Here {0}", ex.StackTrace);
                 }
             }
+            Console.WriteLine("Count of unkown places: {0}", unknownRecordCount);
         }
     }
 }
